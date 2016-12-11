@@ -52,6 +52,7 @@ module Ritm
       end
 
       def build_proxy(host, port, https_forward_to, req_intercept, res_intercept)
+        authenticator = WEBrick::HTTPAuth::ProxyBasicAuth.new(Realm: 'ADMON Auth Realm', UserDB: {})
         @http = Ritm::Proxy::ProxyServer.new(Port: port,
                                              AccessLog: [],
                                              BindAddress: host,
@@ -59,7 +60,8 @@ module Ritm
                                              https_forward: https_forward_to,
                                              ProxyVia: nil,
                                              request_interceptor: req_intercept,
-                                             response_interceptor: res_intercept)
+                                             response_interceptor: res_intercept,
+                                             ProxyAuthProc: authenticator.method(:authenticate).to_proc)
       end
 
       def build_reverse_proxy(_host, port, req_intercept, res_intercept)
