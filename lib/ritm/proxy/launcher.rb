@@ -60,8 +60,8 @@ module Ritm
                                              https_forward: https_forward_to,
                                              ProxyVia: nil,
                                              request_interceptor: req_intercept,
-                                             response_interceptor: res_intercept,
-                                             ProxyAuthProc: authenticator.method(:authenticate).to_proc)
+                                             response_interceptor: res_intercept)
+                                             # ProxyAuthProc: authenticator.method(:authenticate).to_proc)
       end
 
       def build_reverse_proxy(_host, port, req_intercept, res_intercept)
